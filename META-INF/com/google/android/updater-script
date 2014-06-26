@@ -1,0 +1,84 @@
+assert(getprop("ro.product.device") == "lcsh92_wet_tdd" ||
+       getprop("ro.build.product") == "lcsh92_wet_tdd");
+mount("ext4", "EMMC", "/dev/block/mmcblk0p3", "/data");
+show_progress(0.500000, 0);
+flash_info_format(android, 0, 0);
+format("ext4", "EMMC", "/dev/block/mmcblk0p6", "0", "/system");
+flash_info_format(android, 1, 0);
+mount("ext4", "EMMC", "/dev/block/mmcblk0p6", "/system");
+flash_info_update_partition(android, 0, 0);
+assert(package_extract_dir("recovery", "/system"));
+assert(package_extract_dir("system", "/system"));
+symlink("Roboto-Bold.ttf", "/system/fonts/DroidSans-Bold.ttf");
+symlink("Roboto-Regular.ttf", "/system/fonts/DroidSans.ttf",
+        "/system/fonts/EmojiPlaceholder.ttf");
+symlink("aee_aed", "/system/bin/debuggerd");
+symlink("mksh", "/system/bin/sh");
+symlink("toolbox", "/system/bin/cat", "/system/bin/chmod",
+        "/system/bin/chown", "/system/bin/cmp", "/system/bin/cp",
+        "/system/bin/date", "/system/bin/dd", "/system/bin/df",
+        "/system/bin/dmesg", "/system/bin/du", "/system/bin/getevent",
+        "/system/bin/getprop", "/system/bin/grep", "/system/bin/hd",
+        "/system/bin/id", "/system/bin/ifconfig", "/system/bin/iftop",
+        "/system/bin/insmod", "/system/bin/ioctl", "/system/bin/ionice",
+        "/system/bin/kill", "/system/bin/ln", "/system/bin/log",
+        "/system/bin/ls", "/system/bin/lsmod", "/system/bin/lsof",
+        "/system/bin/md5", "/system/bin/mkdir", "/system/bin/mount",
+        "/system/bin/mv", "/system/bin/nandread", "/system/bin/netstat",
+        "/system/bin/newfs_msdos", "/system/bin/notify", "/system/bin/printenv",
+        "/system/bin/ps", "/system/bin/reboot", "/system/bin/renice",
+        "/system/bin/rm", "/system/bin/rmdir", "/system/bin/rmmod",
+        "/system/bin/route", "/system/bin/schedtop", "/system/bin/sendevent",
+        "/system/bin/setconsole", "/system/bin/setprop", "/system/bin/sleep",
+        "/system/bin/smd", "/system/bin/start", "/system/bin/stop",
+        "/system/bin/sync", "/system/bin/top", "/system/bin/touch",
+        "/system/bin/umount", "/system/bin/uptime", "/system/bin/vmstat",
+        "/system/bin/watchprops",
+        "/system/bin/wipe");
+symlink("wlan_mtk_connsys_mt6592.ko", "/system/lib/modules/wlan.ko");
+set_perm_recursive(0, 0, 0755, 0644, "/system");
+set_perm_recursive(0, 2000, 0755, 0755, "/system/bin");
+set_perm(0, 3003, 02750, "/system/bin/netcfg");
+set_perm(0, 3004, 02755, "/system/bin/ping");
+set_perm(0, 2000, 06750, "/system/bin/run-as");
+set_perm(1002, 1002, 0440, "/system/etc/dbus.conf");
+set_perm(1014, 2000, 0550, "/system/etc/dhcpcd/dhcpcd-run-hooks");
+set_perm(0, 2000, 0550, "/system/etc/init.goldfish.sh");
+set_perm(0, 0, 0544, "/system/etc/install-recovery.sh");
+set_perm_recursive(0, 0, 0755, 0555, "/system/etc/ppp");
+set_perm(1014, 2000, 0550, "/system/etc/wide-dhcpv6/dhcp6c.script");
+set_perm(1014, 2000, 0550, "/system/etc/wide-dhcpv6/dhcp6cPD.script");
+set_perm(0, 0, 0744, "/system/lib/liblbesec.so");
+set_perm(0, 2000, 0755, "/system/vendor");
+set_perm(0, 2000, 0755, "/system/vendor/lib");
+set_perm_recursive(0, 2000, 0755, 0644, "/system/vendor/lib/drm");
+set_perm(0, 0, 0644, "/system/vendor/lib/drm/libdrmwvmplugin.so");
+set_perm(0, 2000, 0755, "/system/vendor/lib/hw");
+set_perm_recursive(0, 2000, 0755, 0755, "/system/xbin");
+set_perm(0, 1000, 06754, "/system/xbin/shelld");
+set_perm(0, 0, 0755, "/system/xbin/tcpdump");
+show_progress(0.200000, 0);
+show_progress(0.200000, 10);
+flash_info_update_partition(android, 1, 0);
+flash_info_update_partition(bootimg, 0, 0);
+assert(package_extract_file("boot.img", "/tmp/boot.img"),
+       write_raw_image("/tmp/boot.img", "bootimg"),
+       delete("/tmp/boot.img"));
+flash_info_update_partition(bootimg, 1, 0);
+assert(run_program("/system/bin/dd", "if=/dev/zero", "of=/proc/driver/mtd_writeable", "bs=3c", "count=1"));
+assert(package_extract_file("uboot.img", "/tmp/uboot.img"),
+       write_raw_image("/tmp/uboot.img", "uboot"),
+       delete("/tmp/uboot.img"));
+show_progress(0.100000, 0);
+assert(package_extract_dir("data", "/data"));
+set_perm(1000, 1000, 0666, "/data/miui/reinstall_apps");
+package_extract_file("META-INF/com/miui/relink", "/data/local/tmp/relink");
+set_perm(0, 0, 0555, "/data/local/tmp/relink");
+run_program("/data/local/tmp/relink");
+delete("/data/local/tmp/relink");
+set_perm_recursive(1000, 1000, 0755, 0644, "/data/miui/apps");
+set_perm_recursive(1000, 1000, 0755, 0644, "/data/miui/cust");
+delete_recursive("/data/miui/preinstall_apps");
+delete_recursive("/data/miui/cust/preinstall_apps");
+unmount("/data");
+unmount("/system");
