@@ -3,7 +3,7 @@
 ro.build.id=JDQ39
 ro.custom.gitcommit.id=41952c44d36acc0d837d5422022b4894f3b6d48b
 ro.build.display.id=JH3CN0.0-41952c44d36acc0d837d5422022b4894f3b6d48b
-ro.build.version.incremental=JHECNBE23.0
+ro.build.version.incremental=JHECNBE23.0.R
 ro.custom.build.version=JHECNBE23.0
 ro.custom.external.version=LTDLM07.1.7_M006
 ro.custom.internal.version=LTDLM07.1.0.1.7T37A0610_M006
