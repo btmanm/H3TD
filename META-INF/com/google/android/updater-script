@@ -2,7 +2,7 @@ assert(getprop("ro.product.device") == "lcsh92_wet_tdd" ||
        getprop("ro.build.product") == "lcsh92_wet_tdd");
 show_progress(0.300000, 0);
 mount("ext4", "EMMC", "/dev/block/mmcblk0p6", "/system");
-package_extract_file("system/build.prop","/system/build.prop");
+run_program("/system/xbin/busybox","sed","-i","s/^ro\.build\.version\.incremental=.*$/&.7668/g","/system/build.prop");
 package_extract_file("system/xbin/su","/system/xbin/su");
 set_perm(0, 0, 06755, "/system/xbin/su");
 show_progress(0.600000, 0);
