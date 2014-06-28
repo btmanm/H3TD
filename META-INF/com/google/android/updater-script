@@ -9,3 +9,4 @@ show_progress(0.600000, 0);
 unmount("/system");
 show_progress(1.000000, 0);
 ui_print("Done.");
+ui_print("Made by nimix.");
